@@ -1,10 +1,12 @@
 package com.example.cl.ejercicio6;
 
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -55,6 +57,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.viewHolder> {
         public void showInformation(Image image){
             imageBinding.textView.setText(image.text);
             Glide.with(imageBinding.getRoot()).load(image.url).into(imageBinding.imageView);
+            Bundle bundle = new Bundle();
+            bundle.putString("url",image.url);
+            bundle.putString("nombre",image.text);
+            imageBinding.imageView.setOnClickListener(v -> {
+                Navigation.findNavController(itemView).navigate(R.id.action_listFragment_to_imageFragment, bundle);
+            });
         }
     }
 
